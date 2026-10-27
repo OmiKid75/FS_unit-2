@@ -1,0 +1,2 @@
+package com.example.campusmaintenance.config; import org.springframework.context.annotation.Configuration; import org.springframework.web.servlet.config.annotation.*;
+@Configuration public class WebConfig implements WebMvcConfigurer {public void addCorsMappings(CorsRegistry r){r.addMapping("/api/**").allowedOrigins("http://localhost:3000","http://localhost:5173").allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS").allowedHeaders("*").exposedHeaders("X-Correlation-ID");}}

@@ -1,0 +1,23 @@
+{
+  "info": {"name":"Secure Backend API - Experiments 2.3.1 and 2.3.2","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json","description":"Set baseUrl=http://localhost:8080. Login and manually copy accessToken into accessToken variable and refreshToken into refreshToken variable."},
+  "variable":[{"key":"baseUrl","value":"http://localhost:8080"},{"key":"accessToken","value":"PASTE_ACCESS_TOKEN_HERE"},{"key":"refreshToken","value":"PASTE_REFRESH_TOKEN_HERE"},{"key":"credentialId","value":"1"}],
+  "item":[
+    {"name":"Experiment 2.3.1 - JWT and RBAC","item":[
+      {"name":"Public hello","request":{"method":"GET","url":"{{baseUrl}}/api/public/hello"}},
+      {"name":"Register new USER","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"username":"newstudent","password":"Student123!"}"},"url":"{{baseUrl}}/api/auth/register"}},
+      {"name":"Login as USER (student / Student123!)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"username":"student","password":"Student123!"}"},"url":"{{baseUrl}}/api/auth/login"}},
+      {"name":"Login as ADMIN (admin / Admin123!)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"username":"admin","password":"Admin123!"}"},"url":"{{baseUrl}}/api/auth/login"}},
+      {"name":"Profile (Bearer access token)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/api/user/profile"}},
+      {"name":"Admin dashboard (requires ADMIN token)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/api/admin/dashboard"}},
+      {"name":"Current identity","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/api/auth/me"}}
+    ]},
+    {"name":"Experiment 2.3.2 - AES and token lifecycle","item":[
+      {"name":"AES encrypt (public demo)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"value":"Sample secret for lab"}"},"url":"{{baseUrl}}/api/crypto/encrypt"}},
+      {"name":"AES decrypt (requires ADMIN token; value must be ciphertext)","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"value":"PASTE_CIPHERTEXT_HERE"}"},"url":"{{baseUrl}}/api/crypto/decrypt"}},
+      {"name":"Store encrypted credential (ADMIN)","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"label":"Demo OAuth token","secret":"sample-third-party-token-123"}"},"url":"{{baseUrl}}/api/credentials"}},
+      {"name":"View stored ciphertext (ADMIN)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/api/credentials/{{credentialId}}"}},
+      {"name":"Refresh and rotate refresh token","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"refreshToken":"{{refreshToken}}"}"},"url":"{{baseUrl}}/api/auth/refresh"}},
+      {"name":"Logout/revoke refresh token","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"refreshToken":"{{refreshToken}}"}"},"url":"{{baseUrl}}/api/auth/logout"}}
+    ]}
+  ]
+}

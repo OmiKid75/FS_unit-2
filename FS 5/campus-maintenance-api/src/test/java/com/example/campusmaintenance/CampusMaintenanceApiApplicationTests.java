@@ -1,0 +1,1 @@
+package com.example.campusmaintenance; import org.junit.jupiter.api.Test; import org.springframework.boot.test.context.SpringBootTest; @SpringBootTest class CampusMaintenanceApiApplicationTests { @Test void contextLoads(){} }

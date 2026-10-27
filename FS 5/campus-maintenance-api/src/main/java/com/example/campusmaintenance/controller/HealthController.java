@@ -1,0 +1,2 @@
+package com.example.campusmaintenance.controller; import com.example.campusmaintenance.dto.ApiResponse; import jakarta.servlet.http.HttpServletRequest; import org.slf4j.MDC; import org.springframework.web.bind.annotation.*;
+@RestController public class HealthController {@GetMapping("/api/health") public ApiResponse<String> health(HttpServletRequest q){return new ApiResponse<>(true,"Campus Maintenance API is running","UP",q.getRequestURI(),MDC.get("correlationId"));}}
